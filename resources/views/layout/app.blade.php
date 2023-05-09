@@ -39,19 +39,19 @@
                     <!-- Profile dropdown -->
                         <div class="relative mr-0 sm:mr-8">
                             <div class="flex items-center divide-x">
-                                {{-- @auth
+                                @auth
                                 <span class="text-white mr-3 font-semibold text-md">{{ auth()->user()->name }}</span>
                                 <button @click="open = !open" type="button" class="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                                     <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
                                 </button>
-                                @else --}}
+                                @else
                                 <li class="mr-3 list-none" style="margin: 0 !important">
                                     <a href="/register" class="block py-2 px-4 text-white rounded">Sign Up</a>
                                 </li>
                                 <li class="list-none" style="margin: 0 !important">
                                     <a href="/login" class="block py-2 px-4 text-white rounded">Log In</a>
                                 </li>
-                                {{-- @endauth   --}}
+                                @endauth  
                             </div>
 
                             <div x-show="open" class="absolute right-0 z-10 mt-2 w-44 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
