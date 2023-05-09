@@ -21,7 +21,8 @@
                         </div>
                         <div class="hidden sm:ml-6 sm:block grow">
                             <div class="w-full space-x-4">
-                                <form method="GET" action="/search">   
+                                <form method="GET" action="/search">
+                                    @csrf   
                                     <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
                                     <div class="relative">
                                         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
