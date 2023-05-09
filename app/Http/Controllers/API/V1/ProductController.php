@@ -17,4 +17,9 @@ class ProductController extends Controller
 
         return view('shop.products.index', compact('just_for_you', 'customers_also_purchased', 'categories'));
     }
+
+    public function show(Product $product)
+    {
+        return view('shop.products.show', compact('product'));
+    }
 }
