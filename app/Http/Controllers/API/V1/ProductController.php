@@ -12,9 +12,9 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $categories = Category::inRandomOrder()->paginate(16);
-        $just_for_you = Product::paginate(24);
-        $customers_also_purchased = Product::inRandomOrder()->paginate(24);
+        $categories = Category::inRandomOrder()->limit(16)->get();
+        $just_for_you = Product::paginate(32);
+        $customers_also_purchased = Product::inRandomOrder()->limit(16)->get();
 
         return view('shop.products.index', compact('just_for_you', 'customers_also_purchased', 'categories'));
     }
