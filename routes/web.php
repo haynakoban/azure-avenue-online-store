@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\V1\CartController;
+use App\Http\Controllers\API\V1\CategoryController;
 use App\Http\Controllers\API\V1\PaymentController;
 use App\Http\Controllers\API\V1\ProductController;
 use App\Http\Controllers\API\V1\SocialAuthController;
@@ -21,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 Route::controller(ProductController::class)->group(function () { 
     Route::get('/', 'index'); // show some of the products
     Route::get('/products/{product}', 'show'); // show single product
+    Route::get('/search', 'search'); // search function
 });
 
 Route::controller(CartController::class)->group(function () { 
@@ -46,4 +48,8 @@ Route::controller(PaymentController::class)->group(function () {
     Route::post('/checkout-pay', 'pay')->name('payment'); // payments
     Route::get('/checkout-success', 'success'); // redirect if payment is success
     Route::get('/checkout-cancel', 'cancel'); // redirect if payment is cancel
+});
+
+Route::controller(CategoryController::class)->group(function () { 
+    Route::get('/categories/{category}', 'index'); // show products by category
 });
