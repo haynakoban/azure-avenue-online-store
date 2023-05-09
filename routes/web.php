@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\V1\CartController;
+use App\Http\Controllers\API\V1\PaymentController;
 use App\Http\Controllers\API\V1\ProductController;
 use App\Http\Controllers\API\V1\SocialAuthController;
 use App\Http\Controllers\API\V1\UserController;
@@ -40,6 +41,9 @@ Route::controller(SocialAuthController::class)->group(function () {
     Route::get('/auth/{provider}/callback', 'callback')->middleware('guest'); // create and login the user
 });
 
-Route::get('/checkout', function () {
-    return view('checkout');
-})->name('checkout'); // checkout bags
+Route::controller(PaymentController::class)->group(function () {
+    Route::get('/checkout', 'checkout')->name('checkout'); // show checkout bags
+    Route::post('/checkout-pay', 'pay')->name('payment'); // payments
+    Route::get('/checkout-success', 'success'); // redirect if payment is success
+    Route::get('/checkout-cancel', 'cancel'); // redirect if payment is cancel
+});

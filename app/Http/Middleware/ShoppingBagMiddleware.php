@@ -17,7 +17,7 @@ class ShoppingBagMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         $shoppingBag = collect();
-        $shippingAmount = 1;
+        $shippingAmount = 1.00;
         
         if (auth()->check()) {
 
