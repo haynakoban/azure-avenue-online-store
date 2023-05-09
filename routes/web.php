@@ -20,8 +20,8 @@ Route::get('/', function () {
 });
 
 Route::controller(UserController::class)->group(function () {
-    // Route::get('/register', 'create')->middleware('guest'); // show register form ( page )
-    // Route::post('/register', 'store'); // create new user
+    Route::get('/register', 'create')->middleware('guest'); // show register form ( page )
+    Route::post('/register', 'store'); // create new user
     Route::get('/login', 'login')->name('login')->middleware('guest'); // show login form ( page )
     Route::post('/login', 'authenticate'); // login the user 
     Route::post('/logout', 'logout')->middleware('auth'); // logout the user
