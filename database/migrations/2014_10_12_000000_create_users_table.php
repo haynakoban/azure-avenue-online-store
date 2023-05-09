@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->integer('role_type'); // 1 - Seller, 2 - Buyer
+            $table->integer('role_type')->default(2); // 1 - Seller, 2 - Buyer
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();

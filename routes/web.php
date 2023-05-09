@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\API\V1\CartController;
+use App\Http\Controllers\API\V1\ProductController;
 use App\Http\Controllers\API\V1\SocialAuthController;
 use App\Http\Controllers\API\V1\UserController;
 use Illuminate\Support\Facades\Route;
@@ -15,8 +17,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('shop.products.index');
+Route::controller(ProductController::class)->group(function () { 
+    Route::get('/', 'index'); // show some of the products
+    Route::get('/products/{product}', 'show'); // show single product
+});
+
+Route::controller(CartController::class)->group(function () { 
+    Route::post('/bags', 'store')->name('bags.store'); // add to bag|cart
+    Route::delete('/bags/{cart}', 'destroy')->name('bags.destroy'); // remove from bag|cart
 });
 
 Route::controller(UserController::class)->group(function () {
@@ -31,3 +39,7 @@ Route::controller(SocialAuthController::class)->group(function () {
     Route::get('/auth/{provider}/redirect', 'redirect')->middleware('guest'); // retrieve data from the specified provider (github and google)
     Route::get('/auth/{provider}/callback', 'callback')->middleware('guest'); // create and login the user
 });
+
+Route::get('/checkout', function () {
+    return view('checkout');
+})->name('checkout'); // checkout bags

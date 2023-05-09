@@ -35,7 +35,7 @@
                         </div>
                     </div>
 
-                    <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-8 sm:pr-0">
+                    <div x-data="{ cart: false }" x-init="cart = false" class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-8 sm:pr-0">
                     <!-- Profile dropdown -->
                         <div class="relative mr-0 sm:mr-8">
                             <div class="flex items-center divide-x">
@@ -65,26 +65,26 @@
                         </div>
 
                     <!-- Shopping bag -->
-                        <div :class="isBagOpen && 'hidden'" class="flex items-center">
-                            {{-- @auth
-                            <button x-on:click="isBagOpen = !isBagOpen" type="button" class="rounded-full bg-[#E74A3B] p-1 text-gray-400 hover:text-white">
+                        <div :class="cart && 'hidden'" class="flex items-center">
+                            @auth
+                            <button x-on:click="cart = !cart" type="button" class="rounded-full bg-[#E74A3B] p-1 text-gray-400 hover:text-white">
                                 <svg class="h-6 w-6" fill="none" stroke="#FFFFFF" stroke-width="1.75" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"></path>
                                 </svg>
                             </button>
-                            @else --}}
+                            @else
                             <a href="/login" class="rounded-full bg-[#E74A3B] p-1 text-gray-400 hover:text-white">
                                 <svg class="h-6 w-6" fill="none" stroke="#FFFFFF" stroke-width="1.75" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"></path>
                                 </svg>
                             </a>
-                            {{-- @endauth   --}}
-                            {{-- <span class="text-white pl-1 font-semibold text-md">{{ $shoppingBag->count() }}</span> --}}
+                            @endauth  
+                            <span class="text-white pl-1 font-semibold text-md">{{ $shoppingBag->count() }}</span>
                         </div>
 
-                        {{-- <div :class="isBagOpen || 'hidden'">
-                            <x-shopping-bag />
-                        </div> --}}
+                        <div :class="cart || 'hidden'">
+                            <x-cart />
+                        </div>
                     </div>
                 </div>
             </div>

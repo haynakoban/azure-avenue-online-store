@@ -2,7 +2,7 @@
 
 @section('content')
     
-    {{-- <main>
+    <main>
         <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
             
             <div class="mx-auto max-w-2xl lg:max-w-7xl bg-gray-50 rounded-md border">
@@ -41,6 +41,6 @@
                 <div id="pagination" class="mt-5">{{ $customers_also_purchased->onEachSide(0)->links() }}</div>
             </div>
         </div>
-    </main> --}}
+    </main>
     
 @endsection
