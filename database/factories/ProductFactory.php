@@ -24,7 +24,7 @@ class ProductFactory extends Factory
             'image_url' => fake()->imageUrl(),
             'name' => fake()->word(),
             'description' => fake()->sentence(),
-            'price' => fake()->randomFloat(2, 10, 1000),
+            'price' => fake()->randomFloat(2, 10, 100),
             'quantity' => fake()->numberBetween(100, 1000),
         ];
     }
