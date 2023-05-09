@@ -156,7 +156,7 @@ class PaymentController extends Controller
 
     public function cancel() 
     {
-        return 'User declined the payment!';
+        return redirect()->route('checkout');
     }
 
     public function checkout()

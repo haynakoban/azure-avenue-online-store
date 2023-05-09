@@ -43,7 +43,7 @@ Route::controller(SocialAuthController::class)->group(function () {
 
 Route::controller(PaymentController::class)->group(function () {
     Route::get('/checkout', 'checkout')->name('checkout'); // show checkout bags
-    Route::post('/checkout-pay', 'pay')->name('payment');
-    Route::get('/checkout-success', 'success');
-    Route::get('/checkout-cancel', 'cancel');
+    Route::post('/checkout-pay', 'pay')->name('payment'); // payments
+    Route::get('/checkout-success', 'success'); // redirect if payment is success
+    Route::get('/checkout-cancel', 'cancel'); // redirect if payment is cancel
 });
