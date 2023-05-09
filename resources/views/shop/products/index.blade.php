@@ -38,7 +38,6 @@
                         <x-product-card :product='$cap'/>
                     @endforeach
                 </div>
-                <div id="pagination" class="mt-5">{{ $customers_also_purchased->onEachSide(0)->links() }}</div>
             </div>
         </div>
     </main>
