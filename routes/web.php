@@ -1,12 +1,12 @@
 <?php
 
-use App\Http\Controllers\API\V1\CartController;
-use App\Http\Controllers\API\V1\CategoryController;
-use App\Http\Controllers\API\V1\PaymentController;
-use App\Http\Controllers\API\V1\ProductController;
-use App\Http\Controllers\API\V1\SocialAuthController;
-use App\Http\Controllers\API\V1\UserController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\WEB\CartController;
+use App\Http\Controllers\WEB\CategoryController;
+use App\Http\Controllers\WEB\PaymentController;
+use App\Http\Controllers\WEB\ProductController;
+use App\Http\Controllers\WEB\SocialAuthController;
+use App\Http\Controllers\WEB\UserController;
+use Illuminate\Support\Facades\Route;   
 
 /*
 |--------------------------------------------------------------------------

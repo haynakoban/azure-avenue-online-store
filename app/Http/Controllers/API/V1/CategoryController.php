@@ -10,8 +10,6 @@ class CategoryController extends Controller
 {
     public function index($category)
     {
-        $products = Category::where('name', $category)->first()->products()->paginate(24);
-        
-        return view('shop.categories.index', compact('products'));
+
     }
 }

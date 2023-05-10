@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\API\V1;
+namespace App\Http\Controllers\WEB;
 
 use App\Http\Controllers\Controller;
-use App\Models\Cart;
 use Illuminate\Http\Request;
 
-class CartController extends Controller
+class OrderController extends Controller
 {
     public function index()
     {
-        # code...
+        
     }
 }
