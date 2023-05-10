@@ -4,6 +4,8 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Filters\V1\CartFilter;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\V1\StoreCartRequest;
+use App\Http\Requests\V1\UpdateCartRequest;
 use App\Http\Resources\V1\CartCollection;
 use App\Http\Resources\V1\CartResource;
 use App\Models\Cart;
@@ -44,5 +46,15 @@ class CartController extends Controller
         }
 
         return new CartResource($cart);
+    }
+
+    public function store(StoreCartRequest $request)
+    {
+        return new CartResource(Cart::create($request->all()));
+    }
+
+    public function update(UpdateCartRequest $request, Cart $cart)
+    {
+        $cart->update($request->all());
     }
 }

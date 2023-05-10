@@ -4,6 +4,8 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Filters\V1\UserFilter;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\V1\StoreUserRequest;
+use App\Http\Requests\V1\UpdateUserRequest;
 use App\Http\Resources\V1\UserCollection;
 use App\Http\Resources\V1\UserResource;
 use App\Models\User;
@@ -60,5 +62,15 @@ class UserController extends Controller
         }
         
         return new UserResource($user);
+    }
+
+    public function store(StoreUserRequest $request)
+    {
+        return new UserResource(User::create($request->all()));
+    }
+
+    public function update(UpdateUserRequest $request, User $user)
+    {
+        $user->update($request->all());
     }
 }
