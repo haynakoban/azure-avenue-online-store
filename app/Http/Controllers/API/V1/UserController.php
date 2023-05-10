@@ -2,67 +2,63 @@
 
 namespace App\Http\Controllers\API\V1;
 
+use App\Filters\V1\UserFilter;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\V1\UserCollection;
+use App\Http\Resources\V1\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
-    public function login()
+    public function index(Request $request)
     {
-        return view('auth.login');
-    }
+        $filter  = new UserFilter();
+        $filterItems = $filter->transform($request);
 
-    public function authenticate(Request $request)
-    {
-        $formFields = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => 'required'
-        ]);
+        $users = User::where($filterItems);
 
-        if (auth()->attempt($formFields)) {
-            $request->session()->regenerate();
+        $includeCarts = $request->query('includeCarts');
+        $includeOrders = $request->query('includeOrders');
+        $includePayments = $request->query('includePayments');
+        $includeProducts = $request->query('includeProducts');
 
-            return redirect('/')->with('message', 'You are now logged in!');
+        if ($includeCarts) {
+            $users = $users->with('carts');
+        }
+        if ($includeOrders) {
+            $users = $users->with('orders');
+        }
+        if ($includePayments) {
+            $users = $users->with('payments');
+        }
+        if ($includeProducts) {
+            $users = $users->with('products');
         }
 
-        return back()->withErrors(['email' => 'Invalid credentials'])->onlyInput('email');
+        return new UserCollection($users->paginate()->appends($request->query()));  
     }
 
-    public function logout(Request $request)
+    public function show(User $user)
     {
-        auth()->logout();
+        $includeCarts = request()->query('includeCarts');
+        $includeOrders = request()->query('includeOrders');
+        $includePayments = request()->query('includePayments');
+        $includeProducts = request()->query('includeProducts');
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return redirect('/')->with('message', 'You have been logged out');
-    }
-
-    public function create()
-    {
-        return view('auth.register');
-    }
-
-    public function store(Request $request)
-    {
-        $formFields = $request->validate([
-            'name' => ['required', 'min:3'],
-            'email' => ['required', 'email', Rule::unique('users', 'email')],
-            'password' => 'required|confirmed|min:6'
-        ]);
-
-        // hash password
-        $formFields['password'] = bcrypt($formFields['password']);
-
-        // create new user
-        $user = User::create($formFields);
-
-        // login
-        auth()->login($user);
-
-        return redirect('/')->with('message', 'User Created and Logged in');
+        if ($includeCarts) {
+            $user = $user->loadMissing('carts');
+        }
+        if ($includeOrders) {
+            $user = $user->loadMissing('orders');
+        }
+        if ($includePayments) {
+            $user = $user->loadMissing('payments');
+        }
+        if ($includeProducts) {
+            $user = $user->loadMissing('products');
+        }
         
+        return new UserResource($user);
     }
 }

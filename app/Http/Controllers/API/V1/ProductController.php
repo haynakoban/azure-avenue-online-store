@@ -2,46 +2,55 @@
 
 namespace App\Http\Controllers\API\V1;
 
+use App\Filters\V1\ProductFilter;
 use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Http\Resources\V1\ProductCollection;
+use App\Http\Resources\V1\ProductResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::inRandomOrder()->limit(16)->get();
-        $just_for_you = Product::paginate(32);
-        $customers_also_purchased = Product::inRandomOrder()->limit(16)->get();
+        $filter  = new ProductFilter();
+        $filterItems = $filter->transform($request);
 
-        return view('shop.products.index', compact('just_for_you', 'customers_also_purchased', 'categories'));
+        $products = Product::where($filterItems);
+
+        $includeCarts = $request->query('includeCarts');
+        $includeCategory = $request->query('includeCategory');
+        $includeUser = $request->query('includeUser');
+
+        if ($includeCarts) {
+            $products = $products->with('carts');
+        }
+        if ($includeCategory) {
+            $products = $products->with('category');
+        }
+        if ($includeUser) {
+            $products = $products->with('user');
+        }
+
+        return new ProductCollection($products->paginate()->appends($request->query()));
     }
 
     public function show(Product $product)
     {
-        return view('shop.products.show', compact('product'));
-    }
+        $includeCarts = request()->query('includeCarts');
+        $includeCategory = request()->query('includeCategory');
+        $includeUser = request()->query('includeUser');
 
-    public function search(Request $request)
-    {
-        $keyword = $request->input('keyword');
-
-        if ($keyword === '') {
-            return view('shop.products.search', ['products' => null]);
+        if ($includeCarts) {
+            $product = $product->loadMissing('carts');
+        }
+        if ($includeCategory) {
+            $product = $product->loadMissing('category');
+        }
+        if ($includeUser) {
+            $product = $product->loadMissing('user');
         }
 
-       
-        $products = DB::table('products')
-                ->join('categories', 'categories.id', '=', 'products.category_id')
-                ->select('categories.name as category_name', 'products.*')
-                ->when($keyword, function ($query, $keyword) {
-                    return $query->where('products.name', 'like', '%' . $keyword . '%')
-                        ->orWhere('products.description', 'like', '%' . $keyword . '%')
-                        ->orWhere('categories.name', 'like', '%' . $keyword . '%');
-                })->paginate(24);
-
-        return view('shop.products.search', ['products' => $products]);
+        return new ProductResource($product);
     }
 }

@@ -2,35 +2,47 @@
 
 namespace App\Http\Controllers\API\V1;
 
+use App\Filters\V1\CartFilter;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\V1\CartCollection;
+use App\Http\Resources\V1\CartResource;
 use App\Models\Cart;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    public function store(Request $request)
+    public function index(Request $request)
     {
-        if (auth()->user()) {
+        $filter  = new CartFilter();
+        $filterItems = $filter->transform($request);
 
-            Cart::create([
-                'user_id' => auth()->user()->id,
-                'product_id' => $request->product_id,
-                'quantity' => $request->quantity,
-            ]);
+        $carts = Cart::where($filterItems);
 
-            return redirect()->back();
+        $includeUser = $request->query('includeUser');
+        $includeProduct = $request->query('includeProduct');
 
-        } else {
-
-            return redirect('/login');
-
+        if ($includeUser) {
+            $carts = $carts->with('user');
         }
+        if ($includeProduct) {
+            $carts = $carts->with('product');
+        }
+
+        return new CartCollection($carts->paginate()->appends($request->query())); 
     }
 
-    public function destroy(Cart $cart)
+    public function show(Cart $cart)
     {
-        $cart->delete();
+        $includeUser = request()->query('includeUser');
+        $includeProduct = request()->query('includeProduct');
 
-        return redirect()->back();
+        if ($includeUser) {
+            $cart = $cart->loadMissing('user');
+        }
+        if ($includeProduct) {
+            $cart = $cart->loadMissing('product');
+        }
+
+        return new CartResource($cart);
     }
 }
