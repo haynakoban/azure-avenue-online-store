@@ -24,7 +24,7 @@ class UserResource extends JsonResource
             'carts' => CartResource::collection($this->whenLoaded('carts')),
             'orders' => OrderResource::collection($this->whenLoaded('orders')),
             'payments' => PaymentResource::collection($this->whenLoaded('payments')),
-            'products' => productResource::collection($this->whenLoaded('products')),
+            'products' => ProductResource::collection($this->whenLoaded('products')),
         ];
     }
 }
