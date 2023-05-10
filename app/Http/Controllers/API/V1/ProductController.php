@@ -14,19 +14,43 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $filter  = new ProductFilter();
-        $queryItems = $filter->transform($request);
+        $filterItems = $filter->transform($request);
 
-        if (count($queryItems) == 0) {
-            return new ProductCollection(Product::paginate());
-        } else {
-            $products = Product::where($queryItems)->paginate();
+        $products = Product::where($filterItems);
 
-            return new ProductCollection($products->appends($request->query()));
+        $includeCarts = $request->query('includeCarts');
+        $includeCategory = $request->query('includeCategory');
+        $includeUser = $request->query('includeUser');
+
+        if ($includeCarts) {
+            $products = $products->with('carts');
         }
+        if ($includeCategory) {
+            $products = $products->with('category');
+        }
+        if ($includeUser) {
+            $products = $products->with('user');
+        }
+
+        return new ProductCollection($products->paginate()->appends($request->query()));
     }
 
     public function show(Product $product)
     {
+        $includeCarts = request()->query('includeCarts');
+        $includeCategory = request()->query('includeCategory');
+        $includeUser = request()->query('includeUser');
+
+        if ($includeCarts) {
+            $product = $product->loadMissing('carts');
+        }
+        if ($includeCategory) {
+            $product = $product->loadMissing('category');
+        }
+        if ($includeUser) {
+            $product = $product->loadMissing('user');
+        }
+
         return new ProductResource($product);
     }
 }

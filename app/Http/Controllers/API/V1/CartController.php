@@ -14,19 +14,35 @@ class CartController extends Controller
     public function index(Request $request)
     {
         $filter  = new CartFilter();
-        $queryItems = $filter->transform($request);
+        $filterItems = $filter->transform($request);
 
-        if (count($queryItems) == 0) {
-            return new CartCollection(Cart::paginate());
-        } else {
-            $carts = Cart::where($queryItems)->paginate();
+        $carts = Cart::where($filterItems);
 
-            return new CartCollection($carts->appends($request->query()));
-        }   
+        $includeUser = $request->query('includeUser');
+        $includeProduct = $request->query('includeProduct');
+
+        if ($includeUser) {
+            $carts = $carts->with('user');
+        }
+        if ($includeProduct) {
+            $carts = $carts->with('product');
+        }
+
+        return new CartCollection($carts->paginate()->appends($request->query())); 
     }
 
     public function show(Cart $cart)
     {
+        $includeUser = request()->query('includeUser');
+        $includeProduct = request()->query('includeProduct');
+
+        if ($includeUser) {
+            $cart = $cart->loadMissing('user');
+        }
+        if ($includeProduct) {
+            $cart = $cart->loadMissing('product');
+        }
+
         return new CartResource($cart);
     }
 }

@@ -21,6 +21,10 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'provider' => $this->provider,
             'providerId' => $this->provider_id,
+            'carts' => CartResource::collection($this->whenLoaded('carts')),
+            'orders' => OrderResource::collection($this->whenLoaded('orders')),
+            'payments' => PaymentResource::collection($this->whenLoaded('payments')),
+            'products' => productResource::collection($this->whenLoaded('products')),
         ];
     }
 }

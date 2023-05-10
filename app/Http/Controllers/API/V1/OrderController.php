@@ -14,19 +14,27 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $filter  = new OrderFilter();
-        $queryItems = $filter->transform($request);
+        $filterItems = $filter->transform($request);
 
-        if (count($queryItems) == 0) {
-            return new OrderCollection(Order::paginate());
-        } else {
-            $orders = Order::where($queryItems)->paginate();
+        $orders = Order::where($filterItems);
 
-            return new OrderCollection($orders->appends($request->query()));
-        }   
+        $includeUser = $request->query('includeUser');
+
+        if ($includeUser) {
+            $orders = $orders->with('user');
+        }
+
+        return new OrderCollection($orders->paginate()->appends($request->query()));   
     }
 
     public function show(Order $order)
     {
+        $includeUser = request()->query('includeUser');
+
+        if ($includeUser) {
+            $order = $order->loadMissing('user');
+        }
+
         return new OrderResource($order);
     }
 }

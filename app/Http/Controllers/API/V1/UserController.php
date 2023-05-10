@@ -14,19 +14,51 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $filter  = new UserFilter();
-        $queryItems = $filter->transform($request);
+        $filterItems = $filter->transform($request);
 
-        if (count($queryItems) == 0) {
-            return new UserCollection(User::paginate());
-        } else {
-            $users = User::where($queryItems)->paginate();
+        $users = User::where($filterItems);
 
-            return new UserCollection($users->appends($request->query()));
-        }   
+        $includeCarts = $request->query('includeCarts');
+        $includeOrders = $request->query('includeOrders');
+        $includePayments = $request->query('includePayments');
+        $includeProducts = $request->query('includeProducts');
+
+        if ($includeCarts) {
+            $users = $users->with('carts');
+        }
+        if ($includeOrders) {
+            $users = $users->with('orders');
+        }
+        if ($includePayments) {
+            $users = $users->with('payments');
+        }
+        if ($includeProducts) {
+            $users = $users->with('products');
+        }
+
+        return new UserCollection($users->paginate()->appends($request->query()));  
     }
 
     public function show(User $user)
     {
+        $includeCarts = request()->query('includeCarts');
+        $includeOrders = request()->query('includeOrders');
+        $includePayments = request()->query('includePayments');
+        $includeProducts = request()->query('includeProducts');
+
+        if ($includeCarts) {
+            $user = $user->loadMissing('carts');
+        }
+        if ($includeOrders) {
+            $user = $user->loadMissing('orders');
+        }
+        if ($includePayments) {
+            $user = $user->loadMissing('payments');
+        }
+        if ($includeProducts) {
+            $user = $user->loadMissing('products');
+        }
+        
         return new UserResource($user);
     }
 }

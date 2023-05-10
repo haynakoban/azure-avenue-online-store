@@ -14,19 +14,27 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         $filter  = new CategoryFilter();
-        $queryItems = $filter->transform($request);
+        $filterItems = $filter->transform($request);
 
-        if (count($queryItems) == 0) {
-            return new CategoryCollection(Category::paginate());
-        } else {
-            $categories = Category::where($queryItems)->paginate();
+        $categories = Category::where($filterItems);
 
-            return new CategoryCollection($categories->appends($request->query()));
-        }   
+        $includeProducts = $request->query('includeProducts');
+
+        if ($includeProducts) {
+            $categories = $categories->with('products');
+        }
+
+        return new CategoryCollection($categories->paginate()->appends($request->query()));  
     }
 
     public function show(Category $category)
     {
+        $includeProducts = request()->query('includeProducts');
+
+        if ($includeProducts) {
+            $category = $category->loadMissing('products');
+        }
+
         return new CategoryResource($category);
     }
 }

@@ -23,6 +23,9 @@ class ProductResource extends JsonResource
             'description' => $this->description,
             'price' => $this->price,
             'quantity' => $this->quantity,
+            'carts' => CartResource::collection($this->whenLoaded('carts')),
+            'category' => new CategoryResource($this->whenLoaded('category')),
+            'user' => new UserResource($this->whenLoaded('user')),
         ];
     }
 }

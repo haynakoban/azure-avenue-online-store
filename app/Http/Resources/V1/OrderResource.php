@@ -19,6 +19,7 @@ class OrderResource extends JsonResource
             'buyerId' => $this->buyer_id,
             'totalAmount' => $this->total_amount,
             'status' => $this->status,
+            'user' => new UserResource($this->whenLoaded('user')),
         ];
     }
 }

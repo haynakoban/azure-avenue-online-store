@@ -15,19 +15,27 @@ class PaymentController extends Controller
     public function index(Request $request)
     {
         $filter  = new PaymentFilter();
-        $queryItems = $filter->transform($request);
+        $filterItems = $filter->transform($request);
 
-        if (count($queryItems) == 0) {
-            return new PaymentCollection(Payment::paginate());
-        } else {
-            $payments = Payment::where($queryItems)->paginate();
+        $payments = Payment::where($filterItems);
 
-            return new PaymentCollection($payments->appends($request->query()));
-        }   
+        $includeUser = $request->query('includeUser');
+
+        if ($includeUser) {
+            $payments = $payments->with('user');
+        }
+
+        return new PaymentCollection($payments->paginate()->appends($request->query()));  
     }
 
     public function show(Payment $payment)
     {
+        $includeUser = request()->query('includeUser');
+
+        if ($includeUser) {
+            $payment = $payment->loadMissing('user');
+        }
+
         return new PaymentResource($payment);
     }
 }

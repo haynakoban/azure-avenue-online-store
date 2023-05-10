@@ -23,6 +23,7 @@ class PaymentResource extends JsonResource
             'currency' => $this->currency,
             'paymentMethod' => $this->payment_method,
             'paymentStatus' => $this->payment_status,
+            'user' => new UserResource($this->whenLoaded('user')),
         ];
     }
 }
