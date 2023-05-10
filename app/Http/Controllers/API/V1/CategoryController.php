@@ -10,6 +10,6 @@ class CategoryController extends Controller
 {
     public function index($category)
     {
-
+        return Category::all();
     }
 }
