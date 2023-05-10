@@ -20,7 +20,9 @@ class PaymentController extends Controller
         if (count($queryItems) == 0) {
             return new PaymentCollection(Payment::paginate());
         } else {
-            return new PaymentCollection(Payment::where($queryItems)->paginate());
+            $payments = Payment::where($queryItems)->paginate();
+
+            return new PaymentCollection($payments->appends($request->query()));
         }   
     }
 

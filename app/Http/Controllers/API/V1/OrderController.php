@@ -19,7 +19,9 @@ class OrderController extends Controller
         if (count($queryItems) == 0) {
             return new OrderCollection(Order::paginate());
         } else {
-            return new OrderCollection(Order::where($queryItems)->paginate());
+            $orders = Order::where($queryItems)->paginate();
+
+            return new OrderCollection($orders->appends($request->query()));
         }   
     }
 

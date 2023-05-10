@@ -19,7 +19,9 @@ class ProductController extends Controller
         if (count($queryItems) == 0) {
             return new ProductCollection(Product::paginate());
         } else {
-            return new ProductCollection(Product::where($queryItems)->paginate());
+            $products = Product::where($queryItems)->paginate();
+
+            return new ProductCollection($products->appends($request->query()));
         }
     }
 

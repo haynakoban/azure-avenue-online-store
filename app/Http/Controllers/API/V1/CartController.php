@@ -19,7 +19,9 @@ class CartController extends Controller
         if (count($queryItems) == 0) {
             return new CartCollection(Cart::paginate());
         } else {
-            return new CartCollection(Cart::where($queryItems)->paginate());
+            $carts = Cart::where($queryItems)->paginate();
+
+            return new CartCollection($carts->appends($request->query()));
         }   
     }
 
