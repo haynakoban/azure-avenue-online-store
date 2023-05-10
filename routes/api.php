@@ -1,11 +1,5 @@
 <?php
 
-use App\Http\Controllers\API\V1\CartController;
-use App\Http\Controllers\API\V1\OrderController;
-use App\Http\Controllers\API\V1\PaymentController;
-use App\Http\Controllers\API\V1\ProductController;
-use App\Http\Controllers\API\V1\UserController;
-use Database\Factories\CategoryFactory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,7 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\API\V1'], function () {
     Route::apiResource('carts', CartController::class);
-    Route::apiResource('categories', CategoryFactory::class);
+    Route::apiResource('categories', CategoryController::class);
     Route::apiResource('orders', OrderController::class);
     Route::apiResource('payments', PaymentController::class);
     Route::apiResource('products', ProductController::class);
