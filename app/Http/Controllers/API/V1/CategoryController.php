@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\V1;
 
+use App\Filters\V1\CategoryFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\CategoryCollection;
 use App\Http\Resources\V1\CategoryResource;
@@ -10,9 +11,16 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return new CategoryCollection(Category::paginate());
+        $filter  = new CategoryFilter();
+        $queryItems = $filter->transform($request);
+
+        if (count($queryItems) == 0) {
+            return new CategoryCollection(Category::paginate());
+        } else {
+            return new CategoryCollection(Category::where($queryItems)->paginate());
+        }   
     }
 
     public function show(Category $category)
