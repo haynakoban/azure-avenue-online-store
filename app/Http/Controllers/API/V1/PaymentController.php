@@ -4,6 +4,8 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Filters\V1\PaymentFilter;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\V1\StorePaymentRequest;
+use App\Http\Requests\V1\UpdatePaymentRequest;
 use App\Http\Resources\V1\PaymentCollection;
 use App\Http\Resources\V1\PaymentResource;
 use App\Models\Payment;
@@ -37,5 +39,15 @@ class PaymentController extends Controller
         }
 
         return new PaymentResource($payment);
+    }
+
+    public function store(StorePaymentRequest $request)
+    {
+        return new PaymentResource(Payment::create($request->all()));
+    }
+
+    public function update(UpdatePaymentRequest $request, Payment $payment)
+    {
+        $payment->update($request->all());
     }
 }
