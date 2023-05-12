@@ -4,12 +4,15 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Filters\V1\CartFilter;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\V1\BulkStoreCartRequest;
 use App\Http\Requests\V1\StoreCartRequest;
 use App\Http\Requests\V1\UpdateCartRequest;
 use App\Http\Resources\V1\CartCollection;
 use App\Http\Resources\V1\CartResource;
 use App\Models\Cart;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class CartController extends Controller
 {
@@ -51,6 +54,22 @@ class CartController extends Controller
     public function store(StoreCartRequest $request)
     {
         return new CartResource(Cart::create($request->all()));
+    }
+
+    public function bulkStore(BulkStoreCartRequest $request)
+    {
+        $bulk = collect($request->all())->map(function($arr, $key) {
+            return Arr::except($arr, ['userId', 'productId']);
+        });
+
+        $now = Carbon::now();
+        $bulk = $bulk->map(function ($record) use ($now) {
+            $record['created_at'] = $now;
+            $record['updated_at'] = $now;
+            return $record;
+        });
+
+        Cart::insert($bulk->toArray());
     }
 
     public function update(UpdateCartRequest $request, Cart $cart)

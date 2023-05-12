@@ -4,11 +4,13 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Filters\V1\CategoryFilter;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\V1\BulkStoreCategoryRequest;
 use App\Http\Requests\V1\StoreCategoryRequest;
 use App\Http\Requests\V1\UpdateCategoryRequest;
 use App\Http\Resources\V1\CategoryCollection;
 use App\Http\Resources\V1\CategoryResource;
 use App\Models\Category;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -43,6 +45,20 @@ class CategoryController extends Controller
     public function store(StoreCategoryRequest $request)
     {
         return new CategoryResource(Category::create($request->all()));
+    }
+
+    public function bulkStore(BulkStoreCategoryRequest $request)
+    {
+        $bulk = collect($request->all());
+
+        $now = Carbon::now();
+        $bulk = $bulk->map(function ($record) use ($now) {
+            $record['created_at'] = $now;
+            $record['updated_at'] = $now;
+            return $record;
+        });
+
+        Category::insert($bulk->toArray());
     }
 
     public function update(UpdateCategoryRequest $request, Category $category)
