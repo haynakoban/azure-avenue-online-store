@@ -1,5 +1,11 @@
 <?php
 
+use App\Http\Controllers\API\V1\CartController;
+use App\Http\Controllers\API\V1\CategoryController;
+use App\Http\Controllers\API\V1\OrderController;
+use App\Http\Controllers\API\V1\PaymentController;
+use App\Http\Controllers\API\V1\ProductController;
+use App\Http\Controllers\API\V1\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,4 +31,11 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\API\V1'], f
     Route::apiResource('payments', PaymentController::class);
     Route::apiResource('products', ProductController::class);
     Route::apiResource('users', UserController::class);
+
+    Route::post('carts/bulk', [CartController::class, 'bulkStore']);
+    Route::post('categories/bulk', [CategoryController::class, 'bulkStore']);
+    Route::post('orders/bulk', [OrderController::class, 'bulkStore']);
+    Route::post('payments/bulk', [PaymentController::class, 'bulkStore']);
+    Route::post('products/bulk', [ProductController::class, 'bulkStore']);
+    Route::post('users/bulk', [UserController::class, 'bulkStore']);
 });
