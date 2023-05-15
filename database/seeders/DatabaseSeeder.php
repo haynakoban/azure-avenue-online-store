@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\Payment;
@@ -45,5 +46,16 @@ class DatabaseSeeder extends Seeder
 
         // Seed Payments
         Payment::factory()->count(150)->create();
+
+        // Seed Carts
+        for ($i=0; $i < 50; $i++) { 
+            $user = User::where('role_type', 2)->inRandomOrder()->first();
+            $product = Product::inRandomOrder()->first();
+
+            Cart::factory()->create([
+                'user_id' => $user->id,
+                'product_id' => $product->id,
+            ]);
+        }
     }
 }

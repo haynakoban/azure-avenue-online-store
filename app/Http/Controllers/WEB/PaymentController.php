@@ -4,6 +4,7 @@ namespace App\Http\Controllers\WEB;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\Order;
 use App\Models\Payment;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -54,6 +55,13 @@ class PaymentController extends Controller
                     }
                 }
             }
+
+            // create new order
+            Order::create([
+                'buyer_id' => auth()->user()->id,
+                'total_amount' => $request->amount,
+                'status' => 'completed'
+            ]);
 
             return redirect()->route('checkout');
 
@@ -136,6 +144,13 @@ class PaymentController extends Controller
                         }
                     }
                 }
+
+                // create new order
+                Order::create([
+                    'buyer_id' => auth()->user()->id,
+                    'total_amount' => $arr['transactions'][0]['amount']['total'],
+                    'status' => 'completed'
+                ]);
 
                 session()->forget('bag');
                 session()->forget('product');
