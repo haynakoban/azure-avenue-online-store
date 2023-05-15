@@ -6,6 +6,7 @@ use App\Http\Controllers\WEB\PaymentController;
 use App\Http\Controllers\WEB\ProductController;
 use App\Http\Controllers\WEB\SocialAuthController;
 use App\Http\Controllers\WEB\UserController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;   
 
 /*
@@ -52,4 +53,35 @@ Route::controller(PaymentController::class)->group(function () {
 
 Route::controller(CategoryController::class)->group(function () { 
     Route::get('/categories/{category}', 'index'); // show products by category
+});
+
+Route::get('/set-up/create-token', function () {
+    $credentials = [
+        'email' => 'admin@admin.com',
+        'password' => 'password'
+    ];
+
+    if (!Auth::attempt($credentials)) {
+        $user = new \App\Models\User();
+
+        $user->role_type = 3;
+        $user->name = 'Admin';
+        $user->email = $credentials['email'];
+        $user->password = bcrypt($credentials['password']);
+        $user->save();
+
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+
+            $adminToken = $user->createToken('admin-token', ['create', 'read', 'update', 'delete']);
+            $updateToken = $user->createToken('update-token', ['create', 'read', 'update']);
+            $basicToken = $user->createToken('basic-token', ['read']);
+
+            return [
+                'admin' => $adminToken->plainTextToken,
+                'update' => $updateToken->plainTextToken,
+                'basic' => $basicToken->plainTextToken
+            ];
+        }
+    }
 });
