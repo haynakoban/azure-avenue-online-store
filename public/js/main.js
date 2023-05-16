@@ -29,4 +29,29 @@ $(document).ready(function () {
             input.val(50);
         }
     });
+
+    // remove item from cart
+    $(".remove-item").click(function (e) {
+        e.preventDefault();
+        var url = $(this).data("url");
+
+        $.ajax({
+            url: url,
+            method: "DELETE",
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            success: function (response) {
+                // Handle success response, such as updating the UI or showing a notification
+                console.log("Item removed successfully");
+                if (response?.message) {
+                    location.reload();
+                }
+            },
+            error: function (xhr, status, error) {
+                // Handle error response
+                console.log("Error removing item from cart");
+            },
+        });
+    });
 });

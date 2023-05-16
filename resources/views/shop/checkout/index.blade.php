@@ -16,7 +16,7 @@
                         <div class="ml-4 flex flex-1 flex-col">
                             <div>
                                 <div class="flex justify-between text-base font-medium text-gray-900">
-                                    <h3><a href="#">{{ $bag->product->name }}</a></h3>
+                                    <h3><a href="/products/{{ $bag->product->id }}">{{ $bag->product->name }}</a></h3>
                                     <p class="ml-4" style="font-family: 'Poppins', 'Times New Roman'">$ {{ $bag->product->price }}</p>
                                 </div>
                                 <p class="mt-1 text-sm text-gray-500">Salmon</p>

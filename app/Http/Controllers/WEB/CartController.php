@@ -12,11 +12,25 @@ class CartController extends Controller
     {
         if (auth()->user()) {
 
-            Cart::create([
+            $isItemExist = Cart::where([
                 'user_id' => auth()->user()->id,
                 'product_id' => $request->product_id,
-                'quantity' => $request->quantity,
-            ]);
+            ])->first();
+
+            if ($isItemExist) {
+
+                $isItemExist->quantity += $request->quantity;
+                $isItemExist->save();
+
+            } else {
+
+                Cart::create([
+                    'user_id' => auth()->user()->id,
+                    'product_id' => $request->product_id,
+                    'quantity' => $request->quantity,
+                ]);
+
+            }
 
             return redirect()->back();
 
@@ -31,6 +45,6 @@ class CartController extends Controller
     {
         $cart->delete();
 
-        return redirect()->back();
+        return response()->json(['message' => true]);
     }
 }
