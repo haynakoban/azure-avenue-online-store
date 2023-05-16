@@ -54,4 +54,17 @@ $(document).ready(function () {
             },
         });
     });
+
+    // Select All checkbox change event
+    $("#select-all").change(function () {
+        $(".item-checkbox").prop("checked", $(this).prop("checked"));
+    });
+
+    // Item checkbox change event
+    $(".item-checkbox").change(function () {
+        // Check if all item checkboxes are checked
+        var allChecked =
+            $(".item-checkbox").length === $(".item-checkbox:checked").length;
+        $("#select-all").prop("checked", allChecked);
+    });
 });

@@ -22,11 +22,15 @@
                                 <div class="mt-8">
                                     <div class="flow-root">
                                         @unless ($shoppingBag->count() === 0)
+                                            <div class="mb-4">
+                                                <input type="checkbox" id="select-all">
+                                                <label class="ml-3" for="select-all">Select All</label>
+                                            </div>
                                             <ul role="list" class="-my-6 divide-y divide-gray-200">
                                                 @foreach ($shoppingBag as $bag)
                                                     <li class="flex py-6">
                                                     <div class="flex items-center pr-3">
-                                                        <input id="checkbox" type="checkbox" name="item[]" value="{{ $bag->id }}" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                                        <input id="checkbox" class="item-checkbox" type="checkbox" name="item[]" value="{{ $bag->id }}" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
                                                     </div>
                                                     <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                                         <img src="{{ $bag->product->image_url }}" alt="{{ $bag->product->name }}" class="h-full w-full object-cover object-center">
