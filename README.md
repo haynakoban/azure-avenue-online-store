@@ -2,22 +2,22 @@
 
 Azure Avenue is a basic online store built with Laravel, serving as a comprehensive final project for my Laravel training. It showcases the fundamental features of an e-commerce platform, allowing users to browse and purchase products conveniently.
 
-- Product Catalog: Users can explore a wide range of products organized into categories. Each product listing provides details such as title, description, price, and images.
-- User Registration and Authentication: Users can create accounts and login. Authentication ensures secure access to purchased products.
-- Shopping Cart: Users can add products to their cart for future purchase. The cart dynamically calculates the total price, and users can adjust quantities or remove items.
-- Checkout Process: Customers can proceed to the checkout page to provide shipping and payment information. Integration with popular payment gateways ensures secure and seamless transactions.
-- Search Functionality: Users can search for products using keywords, making it easier to find specific items from the vast product catalog. 
-- Responsive Design: The store is built with a mobile-friendly layout, ensuring a seamless shopping experience on various devices.
+-   **Product Catalog**: Users can explore a wide range of products organized into categories. Each product listing provides details such as title, description, price, and images.
+-   **User Registration and Authentication**: Users can create accounts and login. Authentication ensures secure access to purchased products.
+-   **Shopping Cart**: Users can add products to their cart for future purchase. The cart dynamically calculates the total price, and users can adjust quantities or remove items.
+-   **Checkout Process**: Customers can proceed to the checkout page to provide shipping and payment information. Integration with popular payment gateways ensures secure and seamless transactions.
+-   **Search Functionality**: Users can search for products using keywords, making it easier to find specific items from the vast product catalog.
+-   **Responsive Design**: The store is built with a mobile-friendly layout, ensuring a seamless shopping experience on various devices.
 
 ## Technologies Used
 
-- Laravel
-- PHP
-- MySQL
-- HTML
-- CSS
-- JavaScript
-- Tailwind CSS
+-   Laravel
+-   PHP
+-   MySQL
+-   HTML
+-   CSS
+-   JavaScript
+-   Tailwind CSS
 
 ## Installation and Setup
 
@@ -25,10 +25,10 @@ To get started with Azure Avenue, follow these steps to install and set up the p
 
 ### Prerequisites
 
-- PHP (>=7.4)
-- Composer
-- MySQL
-- Node.js
+-   PHP (>=7.4)
+-   Composer
+-   MySQL
+-   Node.js
 
 ### Step 1: Clone the Repository
 
@@ -59,6 +59,7 @@ Copy the .env.example file and rename it to .env. Update the necessary environme
 ```
 cp .env.example .env
 ```
+
 Open the .env file in a text editor and update the following variables with your own credentials:
 
 ```
@@ -126,28 +127,3 @@ Make sure to update the .env file with your desired configurations, such as the 
 That's it! Azure Avenue is now installed and ready to be used locally. You can access it in your web browser and start exploring the features.
 
 Feel free to customize the installation instructions based on your project's specific requirements.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
