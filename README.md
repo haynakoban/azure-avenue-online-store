@@ -35,5 +35,23 @@ To get started with Azure Avenue, follow these steps to install and set up the p
 Clone the Azure Avenue repository to your local machine using Git:
 
 ```
-git clone [https://github.com/your-username/azure-avenue.git](https://github.com/haynakoban/azure-avenue-online-store.git)
+git clone https://github.com/haynakoban/azure-avenue-online-store.git
 ```
+
+### Step 2: Install Dependencies
+
+Navigate to the project's root directory and install the PHP and JavaScript dependencies using Composer and npm:
+
+```
+cd azure-avenue-online-store
+
+# Install PHP dependencies
+composer install
+
+# Install JavaScript dependencies
+npm install
+```
+
+
+
+
