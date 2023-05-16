@@ -73,11 +73,11 @@ PAYPAL_CLIENT_SECRET=your_paypal_client_secret
 PAYPAL_CURRENCY=USD
 ```
 
-Replace your_github_client_id and your_github_client_secret with the corresponding values from your GitHub application setup. Similarly, replace your_google_client_id, your_google_client_secret with the values from your Google application setup. Finally, update your_paypal_client_id and your_paypal_client_secret with the credentials from your PayPal application setup. The PAYPAL_CURRENCY variable should be set to the desired currency code.
+Replace **your_github_client_id** and **your_github_client_secret** with the corresponding values from your **GitHub** application setup. Similarly, replace **your_google_client_id**, **your_google_client_secret** with the values from your **Google** application setup. Finally, update **your_paypal_client_id** and **your_paypal_client_secret** with the credentials from your **PayPal** application setup. The **PAYPAL_CURRENCY** variable should be set to the **desired currency code**.
 
 Save the .env file after making the necessary changes.
 
-Remember to obtain the client IDs and secrets from the respective platforms (GitHub, Google, and PayPal) by creating applications or projects in their developer portals.
+Remember to obtain the **client IDs and secrets** from the respective platforms **(GitHub, Google, and PayPal)** by creating applications or projects in their developer portals.
 
 Once you've updated the environment variables, you can proceed with the remaining installation and setup steps.
 
