@@ -10,7 +10,7 @@ class CategoryController extends Controller
 {
     public function index($category)
     {
-        $products = Category::where('name', $category)->first()->products()->paginate(24);
+        $products = Category::where('name', $category)->first()->products()->orderByDesc('updated_at')->paginate(24);
         $categories = Category::inRandomOrder()->whereNotIn('name', [$category])->limit(5)->get();
         
         return view('shop.categories.index', compact('products', 'categories'));

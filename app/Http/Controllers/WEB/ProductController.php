@@ -13,7 +13,7 @@ class ProductController extends Controller
     public function index()
     {
         $categories = Category::inRandomOrder()->limit(16)->get();
-        $just_for_you = Product::paginate(32);
+        $just_for_you = Product::orderByDesc('updated_at')->paginate(32);
         $customers_also_purchased = Product::inRandomOrder()->limit(16)->get();
 
         return view('shop.products.index', compact('just_for_you', 'customers_also_purchased', 'categories'));
