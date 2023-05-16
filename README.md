@@ -120,7 +120,7 @@ You can use the built-in development server to run the application:
 php artisan serve
 ```
 
-The application will be available at http://localhost:8000.
+The application will be available at **http://localhost:8000**.
 
 Make sure to update the .env file with your desired configurations, such as the database connection details, mail settings, and any other required variables.
 
