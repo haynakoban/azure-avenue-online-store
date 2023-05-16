@@ -27,6 +27,7 @@ class ProductController extends Controller
     public function search(Request $request)
     {
         $keyword = $request->input('keyword');
+        $categories = Category::inRandomOrder()->whereNotIn('name', [$keyword])->limit(5)->get();
 
         if ($keyword === '') {
             return view('shop.products.search', ['products' => null]);
@@ -40,8 +41,10 @@ class ProductController extends Controller
                     return $query->where('products.name', 'like', '%' . $keyword . '%')
                         ->orWhere('products.description', 'like', '%' . $keyword . '%')
                         ->orWhere('categories.name', 'like', '%' . $keyword . '%');
-                })->paginate(24);
+                })
+                ->orderByDesc('products.id')
+                ->paginate(24);
 
-        return view('shop.products.search', ['products' => $products]);
+        return view('shop.products.search', compact('products', 'categories'));
     }
 }
