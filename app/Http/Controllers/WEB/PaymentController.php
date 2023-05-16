@@ -174,8 +174,21 @@ class PaymentController extends Controller
         return redirect()->route('checkout');
     }
 
-    public function checkout()
+    public function checkout(Request $request)
     {
-        return view('shop.checkout.index');
+        if ($request->item == null || count($request->item) == 0) {
+            return redirect('/');
+        } else {
+            $carts = collect();
+            $shippingAmount = 1.00;
+
+            $carts = Cart::whereIn('id', $request->item)->get();
+
+            $totalAmount = $carts->sum(function ($item) {
+                return $item->product->price * $item->quantity;
+            });
+
+            return view('shop.checkout.index', compact('carts', 'shippingAmount', 'totalAmount'));
+        }
     }
 }

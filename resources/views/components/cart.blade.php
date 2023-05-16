@@ -1,4 +1,4 @@
-<form action="{{ route('checkout') }}" method="POST">
+<form action="{{ route('checkout') }}" method="GET">
 @csrf  
     <div class="relative z-10" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
         <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
@@ -25,6 +25,9 @@
                                             <ul role="list" class="-my-6 divide-y divide-gray-200">
                                                 @foreach ($shoppingBag as $bag)
                                                     <li class="flex py-6">
+                                                    <div class="flex items-center pr-3">
+                                                        <input id="checkbox" type="checkbox" name="item[]" value="{{ $bag->id }}" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                                    </div>
                                                     <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                                         <img src="{{ $bag->product->image_url }}" alt="{{ $bag->product->name }}" class="h-full w-full object-cover object-center">
                                                     </div>

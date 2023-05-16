@@ -4,11 +4,11 @@
 
 <main>
     <div class="mt-8 mx-auto max-w-xl py-6 px-4 sm:px-6 lg:px-8 border">
-        @unless ($shoppingBag->count() === 0)
+        @unless ($carts->count() === 0)
         <div class="mt-2">
             <div class="flow-root">
                 <ul role="list" class="-my-6 divide-y divide-gray-200">
-                    @foreach ($shoppingBag as $bag)
+                    @foreach ($carts as $bag)
                         <li class="flex py-6">
                         <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                             <img src="{{ $bag->product->image_url }}" alt="{{ $bag->product->name }}" class="h-full w-full object-cover object-center">
@@ -24,11 +24,7 @@
                             <div class="flex flex-1 items-end justify-between text-sm">
                                 <p class="text-gray-500">Qty {{ $bag->quantity }}</p>
                                 <div class="flex">
-                                    <form method="POST" action="{{ route('bags.destroy', $bag->id) }}">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="font-medium text-indigo-600 hover:text-indigo-500">Remove</button>
-                                    </form>
+                                    <button type="button" class="remove-item font-medium text-indigo-600 hover:text-indigo-500" data-url="{{ route('bags.destroy', $bag->id) }}">Remove</button>
                                 </div>
                             </div>
                         </div>
@@ -63,7 +59,7 @@
                     <input type="hidden" name="amount" value="{{ $shippingAmount + $totalAmount }}">
 
                     {{-- cart and product --}}
-                    @foreach ($shoppingBag as $bag)
+                    @foreach ($carts as $bag)
                         <input type="hidden" name="bag[]" value="{{ $bag }}">
                         <input type="hidden" name="product[]" value="{{ $bag->product }}">
                     @endforeach
