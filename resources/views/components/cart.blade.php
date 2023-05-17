@@ -41,7 +41,15 @@
                                                                 <h3><a href="/products/{{ $bag->product->id }}">{{ $bag->product->name }}</a></h3>
                                                                 <p class="ml-4" style="font-family: 'Poppins', 'Times New Roman'">$ {{ $bag->product->price }}</p>
                                                             </div>
-                                                            <p class="mt-1 text-sm text-gray-500">Salmon</p>
+                                                            <p class="mt-1 text-sm text-gray-500" 
+                                                               style="overflow: hidden; 
+                                                                    text-overflow: ellipsis; 
+                                                                    display: -webkit-box;
+                                                                    -webkit-box-orient: vertical;
+                                                                    -webkit-line-clamp: 2; /* Number of lines to show */
+                                                                    line-height: 20px; /* Adjust line height for spacing */
+                                                                    max-height: 40px;"
+                                                            >{{ $bag->product->description }}</p>
                                                         </div>
                                                         <div class="flex flex-1 items-end justify-between text-sm">
                                                             <p class="text-gray-500">Qty {{ $bag->quantity }}</p>
