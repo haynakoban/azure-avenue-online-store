@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\V1;
 use App\Filters\V1\CategoryFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\BulkStoreCategoryRequest;
+use App\Http\Requests\V1\DeleteRequest;
 use App\Http\Requests\V1\StoreCategoryRequest;
 use App\Http\Requests\V1\UpdateCategoryRequest;
 use App\Http\Resources\V1\CategoryCollection;
@@ -64,5 +65,18 @@ class CategoryController extends Controller
     public function update(UpdateCategoryRequest $request, Category $category)
     {
         $category->update($request->all());
+    }
+
+    public function destroy(DeleteRequest $request, $category)
+    {
+        $findCategory = Category::find($category);
+        
+        if (!$findCategory) {
+            return response()->json(['error' => 'Category not found'], 404);
+        }
+
+        $findCategory->delete();
+
+        return response()->json(['message' => 'Category deleted successfully']);
     }
 }

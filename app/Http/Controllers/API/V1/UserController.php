@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\V1;
 use App\Filters\V1\UserFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\BulkStoreUserRequest;
+use App\Http\Requests\V1\DeleteRequest;
 use App\Http\Requests\V1\StoreUserRequest;
 use App\Http\Requests\V1\UpdateUserRequest;
 use App\Http\Resources\V1\UserCollection;
@@ -91,5 +92,18 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, User $user)
     {
         $user->update($request->all());
+    }
+
+    public function destroy(DeleteRequest $request, $user)
+    {
+        $findUser = User::find($user);
+        
+        if (!$findUser) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
+        $findUser->delete();
+
+        return response()->json(['message' => 'User deleted successfully']);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\V1;
 use App\Filters\V1\PaymentFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\BulkStorePaymentRequest;
+use App\Http\Requests\V1\DeleteRequest;
 use App\Http\Requests\V1\StorePaymentRequest;
 use App\Http\Requests\V1\UpdatePaymentRequest;
 use App\Http\Resources\V1\PaymentCollection;
@@ -67,5 +68,18 @@ class PaymentController extends Controller
     public function update(UpdatePaymentRequest $request, Payment $payment)
     {
         $payment->update($request->all());
+    }
+
+    public function destroy(DeleteRequest $request, $payment)
+    {
+        $findPayment = Payment::find($payment);
+        
+        if (!$findPayment) {
+            return response()->json(['error' => 'Payment not found'], 404);
+        }
+
+        $findPayment->delete();
+
+        return response()->json(['message' => 'Payment deleted successfully']);
     }
 }

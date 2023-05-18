@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\V1;
 use App\Filters\V1\ProductFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\BulkStoreProductRequest;
+use App\Http\Requests\V1\DeleteRequest;
 use App\Http\Requests\V1\StoreProductRequest;
 use App\Http\Requests\V1\UpdateProductRequest;
 use App\Http\Resources\V1\ProductCollection;
@@ -83,5 +84,18 @@ class ProductController extends Controller
     public function update(UpdateProductRequest $request, Product $product)
     {
         $product->update($request->all());
+    }
+
+    public function destroy(DeleteRequest $request, $product)
+    {
+        $findProduct = Product::find($product);
+        
+        if (!$findProduct) {
+            return response()->json(['error' => 'Product not found'], 404);
+        }
+
+        $findProduct->delete();
+
+        return response()->json(['message' => 'Product deleted successfully']);
     }
 }
