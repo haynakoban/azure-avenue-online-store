@@ -25,7 +25,7 @@ To get started with Azure Avenue, follow these steps to install and set up the p
 
 ### Prerequisites
 
--   PHP (>=7.4)
+-   PHP (>=8)
 -   Composer
 -   MySQL
 -   Node.js
