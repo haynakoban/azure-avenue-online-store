@@ -124,6 +124,6 @@ The application will be available at **http://localhost:8000**.
 
 Make sure to update the .env file with your desired configurations, such as the database connection details, mail settings, and any other required variables.
 
-That's it! Azure Avenue is now installed and ready to be used locally. You can access it in your web browser and start exploring the features.
+That's it! **Azure Avenue** is now installed and ready to be used locally. You can access it in your web browser and start exploring the features.
 
 Feel free to customize the installation instructions based on your project's specific requirements.
